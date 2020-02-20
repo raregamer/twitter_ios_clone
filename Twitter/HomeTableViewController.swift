@@ -59,6 +59,10 @@ class HomeTableViewController: UITableViewController {
         
     }
     
+    func timeDisplayFormatter(time: String) -> String {
+        return time;
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
                 if indexPath.row + 1 == tweetArray.count {
             loadMoreTweets()
@@ -81,6 +85,9 @@ class HomeTableViewController: UITableViewController {
         
         cell.profileNameLabel.text = name
         cell.tweetLabel.text = tweetArray[indexPath.row]["text"] as? String
+        let time = tweetArray[indexPath.row]["created_at"] as? String
+        cell.tweetTimeLabel.text = timeDisplayFormatter(time: time!)
+        
         let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)
         let data = try? Data(contentsOf: imageUrl!)
         if let imageData = data {
