@@ -70,11 +70,20 @@ class TweetTableViewCell: UITableViewCell {
     
     
     @IBAction func retweet(_ sender: Any) {
-        TwitterAPICaller.client?.retweet(tweetId: tweetId, success: {
-            self.setRetweet(true)
-        }, failure: { (error) in
-            print ("retweet did not succeed: \(error)")
-        })
+        let toBeRetweeted = !retweeted
+        if(toBeRetweeted) {
+            TwitterAPICaller.client?.retweet(tweetId: tweetId, success: {
+                self.setRetweet(true)
+            }, failure: { (error) in
+                print ("retweet did not succeed: \(error)")
+            })
+        } else{
+            TwitterAPICaller.client?.unRetweet(tweetId: tweetId, success: {
+                self.setRetweet(false)
+            }, failure: { (error) in
+                print ("unretweet did not succeed: \(error)")
+            })
+        }
         
         
     }
